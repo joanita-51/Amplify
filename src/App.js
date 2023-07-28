@@ -91,14 +91,14 @@ const App = ({ signOut, user }) => {
   return (
     <View style={styles.container}>
       {/* <Heading level={1}>Hello </Heading> */}
-      <div style={styles.title}>
+      <View style={styles.title}>
         <Heading level={1}>Hello buddy 👋!</Heading>
         <Button style={styles.signOut} onClick={signOut}>Sign out</Button>
-      </div>
-      <h2 style={styles.h2}>Weekly Todos</h2>
-      <div style={styles.form}>
+      </View>
+      <Heading level={2} style={styles.h2}>Weekly Todos</Heading>
+      <View style={styles.form}>
 
-        <div>
+        <View>
           <TextField
             onChange={event => setInput('name', event.target.value)}
             style={styles.TextField}
@@ -112,12 +112,12 @@ const App = ({ signOut, user }) => {
             placeholder="Description"
           />
           <button style={styles.button} onClick={addTodo}>Create Todo</button>
-        </div>
+        </View>
 
-        <div >
+        <View >
           {isEditing && (
-            <div style={styles.update}>
-              <h2 style={styles.titleEdit}>Edit Todo</h2>
+            <View style={styles.update}>
+              <Heading level={2} style={styles.titleEdit}>Edit Todo</Heading>
               <TextField
                 style={styles.TextField}
                 type="text"
@@ -134,37 +134,37 @@ const App = ({ signOut, user }) => {
               />
               <Button onClick={() => handleSaveEdit()} style={styles.edit}>Save</Button>
               <Button onClick={handleCloseEditDialog} style={styles.delete}>Cancel</Button>
-            </div>
+            </View>
           )}
 
           {
             todos.map((todo, index) => (
               <View key={todo.id ? todo.id : index} style={styles.todo}>
-                <div style={styles.todoItems}>
-                <div style={styles.todoItems}>
+                <View style={styles.todoItems}>
+                <View style={styles.todoItems}>
                   <Text style={styles.todoNumber}>{index+1}.</Text>
-                  <div >
+                  <View >
                     <Text style={styles.todoName}>{todo.name}</Text>
                     <Text style={styles.todoDescription}>{todo.description}</Text>
-                  </div>
+                  </View>
 
-                </div>
+                </View>
 
-                <div>
+                <View>
                   <Button style={styles.edit} onClick={() => handleOpenEditDialog(todo.id, todo.name, todo.description)}>Edit</Button>
                   <Button style={styles.delete} onClick={()=>removeTodo(todo.id)}>Delete</Button>
-                </div>
+                </View>
 
-                </div>
+                </View>
 
 
               </View>
             ))
           }
-        </div>
+        </View>
 
 
-      </div>
+      </View>
 
 
     </View>
