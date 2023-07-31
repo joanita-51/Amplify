@@ -7,6 +7,7 @@ export const getTodo = /* GraphQL */ `
       id
       name
       description
+      userId
       createdAt
       updatedAt
       __typename
@@ -24,6 +25,7 @@ export const listTodos = /* GraphQL */ `
         id
         name
         description
+        userId
         createdAt
         updatedAt
         __typename

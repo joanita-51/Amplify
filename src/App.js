@@ -1,6 +1,6 @@
 /* src/App.js */
 import React, { useEffect, useState } from 'react'
-import { Amplify, API, graphqlOperation } from 'aws-amplify'
+import { Amplify, API, graphqlOperation, Auth} from 'aws-amplify'
 import { createTodo, deleteTodo, updateTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries'
 import awsExports from "./aws-exports";
@@ -15,6 +15,11 @@ const App = ({ signOut, user }) => {
   const [todos, setTodos] = useState([])
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTodo1, setUpdatedTodo1] = useState({id:'', name:'', description:''});
+  // Get the authenticated user's information, including the user ID
+  const getUserId = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    return user.attributes.sub;
+  };
 
   useEffect(() => {
     fetchTodos()
@@ -26,16 +31,24 @@ const App = ({ signOut, user }) => {
 
   async function fetchTodos() {
     try {
-      const todoData = await API.graphql(graphqlOperation(listTodos))
+      const userId = await getUserId();
+      const todoData = await API.graphql(graphqlOperation(listTodos,{
+        filter:{
+          userId:{
+            eq:userId,
+          },
+        },
+      }))
       const todos = todoData.data.listTodos.items
       setTodos(todos)
-    } catch (err) { console.log('error fetching todos') }
+    } catch (err) { console.log('error fetching todos', err) }
   }
 
   async function addTodo() {
     try {
       if (!formState.name || !formState.description) return
-      const todo = { ...formState }
+      const userId = await getUserId();
+      const todo = { ...formState, userId}
       setTodos([...todos, todo])
       setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
@@ -56,7 +69,7 @@ const App = ({ signOut, user }) => {
     try {
       const input ={
         id,
-        ...updatedTodo
+        ...updatedTodo,
       }
       const updatedTodos= todos.map((todo)=>
       todo.id === id? {...todo, ...updatedTodo}: todo
