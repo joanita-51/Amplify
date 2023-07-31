@@ -21,15 +21,15 @@ Task Planner is a full-stack web application developed using AWS Amplify, offeri
 
 ## Getting Started
 To get started with Task Planner, follow these steps:
-1. Click on the application URL to access the application.
+1. Click on the application [URL](https://task.d21saxfg1vd4sj.amplifyapp.com/) to access the application.
 2. Create an account using the provided authentication process.
 3. Once logged in, you can start creating your weekly todos.
 4. You can edit and delete your todos as needed.
 
 ## Usage
-- Create a new todo: Click on the "Add New Todo" button, enter the task details, and click "Save."
+- Create a new todo: Enter the task name and description, and click "Create Todo"
 - Edit a todo: Click on the todo you wish to edit, make the necessary changes, and click "Save."
-- Delete a todo: Click on the trash icon next to the todo you want to remove.
+- Delete a todo: Click on the delete button next to the todo you want to remove.
 
 ## Contributing
 We welcome contributions from the community. To contribute to Task Planner, follow these steps:
